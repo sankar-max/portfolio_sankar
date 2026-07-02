@@ -65,11 +65,38 @@ const MenuToggle = ({ toggle, isOpen }: MenuToggleProps) => (
   </button>
 )
 
+const THEMES = [
+  { id: "indigo", name: "Indigo", bg: "bg-[#6366f1]" },
+  { id: "cyberpunk", name: "Cyberpunk", bg: "bg-[#db2777]" },
+  { id: "emerald", name: "Emerald", bg: "bg-[#10b981]" },
+  { id: "lavender", name: "Lavender", bg: "bg-[#8b5cf6]" },
+  { id: "amber", name: "Amber", bg: "bg-[#f59e0b]" },
+]
+
 export function Navbar() {
   const [activeSection, setActiveSection] = useState("")
   const [hoveredSection, setHoveredSection] = useState<string | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [currentTheme, setCurrentTheme] = useState("indigo")
+
+  const changeTheme = (themeId: string) => {
+    if (typeof window === "undefined") return
+    const root = document.documentElement
+    THEMES.forEach((t) => {
+      root.classList.remove(`theme-${t.id}`)
+    })
+    if (themeId !== "indigo") {
+      root.classList.add(`theme-${themeId}`)
+    }
+    setCurrentTheme(themeId)
+    localStorage.setItem("portfolio-theme", themeId)
+  }
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("portfolio-theme") || "indigo"
+    changeTheme(savedTheme)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -184,7 +211,31 @@ export function Navbar() {
         </nav>
 
         {/* Right CTA Actions */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-3.5">
+          {/* Theme Palette Switcher */}
+          <div className="flex items-center p-1 rounded-xl bg-zinc-950/80 border border-zinc-900 gap-1.5 shrink-0">
+            {THEMES.map((theme) => {
+              const isActive = currentTheme === theme.id
+              return (
+                <button
+                  key={theme.id}
+                  onClick={() => changeTheme(theme.id)}
+                  className="relative size-4 rounded-full flex items-center justify-center cursor-pointer shrink-0 transition-transform hover:scale-110"
+                  title={`Select ${theme.name} Theme`}
+                >
+                  <span className={`size-2.5 rounded-full ${theme.bg}`} />
+                  {isActive && (
+                    <motion.span
+                      layoutId="active-nav-theme-ring"
+                      className="absolute inset-0 rounded-full border border-white/60"
+                      transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                    />
+                  )}
+                </button>
+              )
+            })}
+          </div>
+
           {/* Recruiter Mode Modal Trigger */}
           <RecruiterModal>
             <Button
@@ -244,6 +295,35 @@ export function Navbar() {
                     </a>
                   </motion.div>
                 ))}
+              </div>
+
+              <div className="h-[1px] bg-zinc-900/80 w-full" />
+
+              {/* Mobile Theme Switcher */}
+              <div className="flex flex-col gap-2 py-0.5">
+                <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-500">Theme Palette</span>
+                <div className="flex items-center gap-2 p-1.5 rounded-xl bg-zinc-950/80 border border-zinc-900 w-max">
+                  {THEMES.map((theme) => {
+                    const isActive = currentTheme === theme.id
+                    return (
+                      <button
+                        key={theme.id}
+                        onClick={() => changeTheme(theme.id)}
+                        className="relative size-5 rounded-full flex items-center justify-center cursor-pointer shrink-0 transition-transform"
+                        title={`Select ${theme.name} Theme`}
+                      >
+                        <span className={`size-3.5 rounded-full ${theme.bg}`} />
+                        {isActive && (
+                          <motion.span
+                            layoutId="active-mobile-theme-ring"
+                            className="absolute inset-0 rounded-full border border-white/60"
+                            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                          />
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
 
               <div className="h-[1px] bg-zinc-900/80 w-full" />

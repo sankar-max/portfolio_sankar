@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import React from "react"
-import { motion } from "framer-motion"
-import { Calendar, Briefcase, CheckCircle2 } from "lucide-react"
-import { Variants } from "framer-motion"
+import React from "react";
+import { motion } from "framer-motion";
+import { Calendar, Briefcase, CheckCircle2 } from "lucide-react";
+import { Variants } from "framer-motion";
 
 interface Achievement {
-  title: string
-  description: string
-  impact: string
+  title: string;
+  description: string;
+  impact: string;
 }
 
 interface ExperienceBlock {
-  company: string
-  role: string
-  duration: string
-  location: string
-  summary: string
-  achievements: Achievement[]
+  company: string;
+  role: string;
+  duration: string;
+  location: string;
+  summary: string;
+  achievements: Achievement[];
 }
 
 const EXPERIENCE_DATA: ExperienceBlock[] = [
@@ -26,31 +26,40 @@ const EXPERIENCE_DATA: ExperienceBlock[] = [
     role: "Frontend Engineer",
     duration: "Feb 2023 — Mar 2026",
     location: "Coimbatore, Tamil Nadu",
-    summary: "Led frontend architecture engineering for enterprise-grade SaaS survey builders and dynamic admin systems, specializing in schema-driven UI renderers.",
+    summary:
+      "Led frontend architecture engineering for enterprise-grade SaaS survey builders and dynamic admin systems, specializing in schema-driven UI renderers.",
     achievements: [
       {
         title: "JSON Rendering Engine Optimization",
-        description: "Re-engineered core JSON schema compiler using component composition, memoization, and strict rendering isolation.",
-        impact: "Reduced form rendering latency by 45% for surveys containing 100+ nested matrix fields."
+        description:
+          "Re-engineered core JSON schema compiler using component composition, memoization, and strict rendering isolation.",
+        impact:
+          "Reduced form rendering latency by 45% for surveys containing 100+ nested matrix fields.",
       },
       {
         title: "Multi-Tenant Layout Isolation",
-        description: "Implemented a subdomain tenant-middleware gateway resolving client styling isolation and white-label asset loading.",
-        impact: "Provided seamless customized themes dynamically loaded based on headers for 20+ enterprise customers."
+        description:
+          "Implemented a subdomain tenant-middleware gateway resolving client styling isolation and white-label asset loading.",
+        impact:
+          "Provided seamless customized themes dynamically loaded based on headers for 20+ enterprise customers.",
       },
       {
         title: "Reusable Component Framework Design",
-        description: "Designed and built a library of 40+ atomic and nested inputs (Comparison Matrix, Signatures, drill-down selects).",
-        impact: "Accelerated developer feature delivery speed by 60% across team sub-modules."
+        description:
+          "Designed and built a library of 40+ atomic and nested inputs (Comparison Matrix, Signatures, drill-down selects).",
+        impact:
+          "Accelerated developer feature delivery speed by 60% across team sub-modules.",
       },
       {
         title: "Granular RBAC Authorization Context",
-        description: "Introduced client-side validation logic that restricts views, navigation items, and API actions based on JWT scopes.",
-        impact: "Eliminated client authentication overlap issues and fully synced route access with user permissions."
-      }
-    ]
-  }
-]
+        description:
+          "Introduced client-side validation logic that restricts views, navigation items, and API actions based on JWT scopes.",
+        impact:
+          "Eliminated client authentication overlap issues and fully synced route access with user permissions.",
+      },
+    ],
+  },
+];
 
 export function TimelineExperience() {
   const containerVariants: Variants = {
@@ -58,19 +67,19 @@ export function TimelineExperience() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15
-      }
-    }
-  }
+        staggerChildren: 0.15,
+      },
+    },
+  };
 
   const cardVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { type: "spring", stiffness: 100, damping: 15 }
-    }
-  }
+      transition: { type: "spring", stiffness: 100, damping: 15 },
+    },
+  };
 
   return (
     <div className="relative border-l border-zinc-900 ml-4 md:ml-8 pl-8 space-y-12 py-2">
@@ -79,14 +88,13 @@ export function TimelineExperience() {
 
       {EXPERIENCE_DATA.map((exp, idx) => (
         <div key={exp.company} className="relative">
-          
           {/* Node Icon indicator with pulse effect */}
-          <motion.div 
+          <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            className="absolute -left-[45px] top-1.5 flex h-8 w-8 items-center justify-center rounded-full border border-indigo-500 bg-zinc-950 text-indigo-400 z-10 shadow-lg shadow-indigo-500/10"
+            className="absolute left-[-47px] top-1.5 flex h-8 w-8 items-center justify-center rounded-full border border-indigo-500 bg-zinc-950 text-indigo-400 z-10 shadow-lg shadow-indigo-500/10"
           >
             <Briefcase className="size-4" />
           </motion.div>
@@ -101,14 +109,18 @@ export function TimelineExperience() {
               className="space-y-3"
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
-                <h3 className="text-2xl font-extrabold font-heading text-white tracking-tight">{exp.role}</h3>
+                <h3 className="text-2xl font-extrabold font-heading text-white tracking-tight">
+                  {exp.role}
+                </h3>
                 <div className="inline-flex items-center gap-1.5 text-xs font-mono text-zinc-500 bg-zinc-950 border border-zinc-900 rounded-lg px-2.5 py-1">
                   <Calendar className="size-3.5 text-indigo-400" />
                   <span>{exp.duration}</span>
                 </div>
               </div>
-              
-              <div className="text-sm font-mono text-indigo-400 font-semibold">{exp.company} &bull; {exp.location}</div>
+
+              <div className="text-sm font-mono text-indigo-400 font-semibold">
+                {exp.company} &bull; {exp.location}
+              </div>
               <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-3xl font-mono mt-4">
                 {exp.summary}
               </p>
@@ -116,7 +128,7 @@ export function TimelineExperience() {
 
             {/* Achievements List with stagger reveals */}
             <div className="space-y-4">
-              <motion.h4 
+              <motion.h4
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -125,7 +137,7 @@ export function TimelineExperience() {
                 Key Achievements & Outcomes
               </motion.h4>
 
-              <motion.div 
+              <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -136,10 +148,10 @@ export function TimelineExperience() {
                   <motion.div
                     key={ach.title}
                     variants={cardVariants}
-                    whileHover={{ 
-                      y: -4, 
+                    whileHover={{
+                      y: -4,
                       borderColor: "rgba(99, 102, 241, 0.4)",
-                      boxShadow: "0 10px 20px -10px rgba(99, 102, 241, 0.15)" 
+                      boxShadow: "0 10px 20px -10px rgba(99, 102, 241, 0.15)",
                     }}
                     className="rounded-2xl border border-zinc-900 bg-zinc-950/60 p-5 hover:bg-zinc-950 transition-all duration-300 backdrop-blur-sm relative overflow-hidden group flex flex-col justify-between"
                   >
@@ -154,7 +166,7 @@ export function TimelineExperience() {
                         </p>
                       </div>
                     </div>
-                    
+
                     <div className="text-[11px] font-mono text-emerald-400/90 pt-3 border-t border-zinc-900/60 mt-4 flex items-center gap-1.5 pl-8">
                       <span className="size-1.5 rounded-full bg-emerald-500" />
                       <span>Impact: {ach.impact}</span>
@@ -167,5 +179,5 @@ export function TimelineExperience() {
         </div>
       ))}
     </div>
-  )
+  );
 }

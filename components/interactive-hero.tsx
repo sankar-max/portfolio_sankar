@@ -1,23 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Variants } from "framer-motion";
-import {
-  ShieldCheck,
-  ArrowRight,
-  Cpu,
-  Sparkles,
-  Terminal,
-  Code,
-  Check,
-} from "lucide-react";
+import { ShieldCheck, ArrowRight, Terminal } from "lucide-react";
 import { Button } from "./ui/button";
+import { MdOutlineComputer } from "react-icons/md";
 
 export function InteractiveHero() {
-  const [clickCount, setClickCount] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -40,10 +29,12 @@ export function InteractiveHero() {
 
   const codeString = `const developer = {
   name: "Sankarapandian R",
-  role: "Frontend Engineer",
+  role: "Frontend Engineer ",
   skills: ["React", "Next.js", "TS", "CSS"],
   performance: "High-Fidelity",
-  experience: "3.2+ Years"
+  experience: "3.2+ Years",
+  current_status: "Immediate Joiner",
+  contact: "sankarvj18@gmail.com",
 };`;
 
   return (
@@ -136,7 +127,7 @@ export function InteractiveHero() {
               damping: 15,
               delay: 0.3,
             }}
-            className="w-[90%] aspect-[4/3] rounded-2xl border border-zinc-800/80 bg-zinc-950/90 p-5 shadow-2xl absolute top-6 left-2 overflow-hidden premium-glass"
+            className="w-[90%] aspect-[4/3] lg:mt-10 rounded-2xl border border-zinc-800/80 bg-zinc-950/90 p-5 shadow-2xl absolute top-6 left-2 overflow-hidden premium-glass"
           >
             <div className="flex items-center justify-between border-b border-zinc-900 pb-3 mb-4">
               <div className="flex items-center gap-1.5">
@@ -170,99 +161,9 @@ export function InteractiveHero() {
                 ))}
               </code>
             </pre>
-          </motion.div>
-
-          {/* Floating UI Sandbox Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.95, rotate: 3 }}
-            animate={{
-              opacity: 1,
-              y: [0, -10, 0],
-              rotate: 3,
-            }}
-            transition={{
-              opacity: { delay: 0.5, duration: 0.5 },
-              y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
-              rotate: { delay: 0.5 },
-            }}
-            className="w-[85%] rounded-2xl border border-zinc-800/80 bg-zinc-900/60 p-5 shadow-2xl absolute bottom-6 right-2 backdrop-blur-md premium-glass hover:border-indigo-500/40 transition-colors duration-300"
-          >
-            <div className="flex items-center justify-between border-b border-zinc-800/60 pb-2.5 mb-3.5">
-              <span className="text-[10px] font-mono text-zinc-400 flex items-center gap-1.5">
-                <Code className="size-3 text-indigo-400" />
-                Interactive Component
-              </span>
-              <span className="text-[9px] font-mono rounded bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 font-semibold">
-                ACTIVE
-              </span>
-            </div>
-
-            <div className="space-y-4">
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-[10px] font-mono text-zinc-500">
-                  <span>Spring Physics Tester</span>
-                  <span className="text-zinc-400">clicks: {clickCount}</span>
-                </div>
-
-                {/* Clicking updates states and runs animation */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.96 }}
-                  onClick={() => setClickCount((prev) => prev + 1)}
-                  className="w-full h-10 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-mono text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-indigo-500/10 transition-colors"
-                >
-                  <Sparkles className="size-3.5 animate-spin" />
-                  Trigger Ripple Effects
-                </motion.button>
-              </div>
-
-              {/* Ripple animation feedback dots */}
-              <div className="flex justify-center gap-2">
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    animate={{
-                      scale:
-                        clickCount > 0 && clickCount % 5 === i
-                          ? [1, 1.8, 1]
-                          : 1,
-                      backgroundColor:
-                        clickCount > 0 && clickCount % 5 === i
-                          ? "#6366f1"
-                          : "#27272a",
-                    }}
-                    transition={{ duration: 0.4 }}
-                    className="size-2 rounded-full"
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Little Floating Speed Badge */}
-          <motion.div
-            initial={{ opacity: 0, x: -50, scale: 0.8 }}
-            animate={{
-              opacity: 1,
-              x: 0,
-              scale: 1,
-              y: [0, 8, 0],
-            }}
-            transition={{
-              opacity: { delay: 0.7, duration: 0.4 },
-              x: { delay: 0.7, type: "spring" },
-              y: {
-                repeat: Infinity,
-                duration: 4,
-                ease: "easeInOut",
-                delay: 0.5,
-              },
-            }}
-            className="absolute top-2 right-4 rounded-xl border border-zinc-800 bg-zinc-950 px-3.5 py-2 flex items-center gap-2 shadow-xl z-20"
-          >
-            <div className="size-2 rounded-full bg-emerald-500 animate-ping" />
-            <span className="text-[11px] font-mono text-zinc-300">
-              Score: <strong className="text-emerald-400">100%</strong>
+            <span className="absolute bottom-4 bg-zinc-950 border border-zinc-800 rounded-md p-1.5 right-4 text-white/80">
+              {/* coding icon */}
+              <MdOutlineComputer className="size-5" />
             </span>
           </motion.div>
         </div>

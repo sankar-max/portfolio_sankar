@@ -15,9 +15,9 @@ import {
   ArrowRight,
   ExternalLink,
   Terminal,
-  ShieldCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -33,8 +33,21 @@ import { InteractiveBackground } from "@/components/interactive-bg";
 import { TimelineExperience } from "@/components/timeline-experience";
 import { TechMatrix } from "@/components/tech-matrix";
 import { DevelopmentPhilosophy } from "@/components/development-philosophy";
-import { AnimatedCounter } from "@/components/animated-counter";
 import { Navbar } from "@/components/navbar";
+const TECH_ICON_MAP: Record<string, string> = {
+  "React": "/icons/react.png",
+  "Next.js": "/icons/nextjs.png",
+  "TypeScript": "/icons/typescript.png",
+  "Tailwind CSS": "/icons/tailwindcss.png",
+  "Zustand": "/icons/zustand.jpg",
+  "Redux": "/icons/redux.png",
+  "TanStack Query": "/icons/tanstack.png",
+  "Node.js": "/icons/nodejs.png",
+  "Express": "/icons/expressjs.png",
+  "Express.js": "/icons/expressjs.png",
+  "PostgreSQL": "/icons/postgresql.png",
+  "Hono.js": "/icons/honojs.png",
+};
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
@@ -111,65 +124,115 @@ export default function Home() {
       {/* Hero Section */}
       <InteractiveHero />
 
-      {/* Stats Dashboard Section (Animated Counters) */}
-      <section className="max-w-7xl mx-auto px-6 md:px-8 py-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 border border-zinc-900 bg-zinc-950/70 p-6 sm:p-8 rounded-3xl backdrop-blur-sm relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/5 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-
-          {[
-            {
-              label: "Experience",
-              value: 3.2,
-              decimals: 1,
-              suffix: "+ Years",
-              desc: "Building production SaaS apps",
-            },
-            {
-              label: "UI Inputs Built",
-              value: 40,
-              decimals: 0,
-              suffix: "+ Inputs",
-              desc: "Reusable custom components",
-            },
-            {
-              label: "Lighthouse Score",
-              value: 100,
-              decimals: 0,
-              suffix: "%",
-              desc: "Best practices & optimization",
-            },
-          ].map((stat, idx) => (
-            <div
-              key={idx}
-              className="space-y-1.5 text-left border-l border-zinc-900 pl-4 sm:pl-6 first:border-l-0"
-            >
-              <span className="text-[10px] font-mono uppercase tracking-widest text-indigo-400/90 font-bold">
-                {stat.label}
+      {/* About Me Section */}
+      <section id="about" className="max-w-7xl mx-auto px-6 md:px-8 py-16 relative">
+        {/* Decorative backdrop glow */}
+        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative">
+          
+          {/* Left Column: Narrative (7 cols) */}
+          <div className="lg:col-span-7 space-y-6">
+            <div className="space-y-3">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-indigo-400 font-bold bg-indigo-500/5 border border-indigo-500/10 rounded-full px-3 py-1 w-fit block">
+                Profile Overview
               </span>
-              <div className="text-3xl sm:text-4xl font-extrabold text-white font-heading tracking-tight flex items-baseline">
-                <AnimatedCounter
-                  value={stat.value}
-                  decimals={stat.decimals}
-                  suffix={stat.suffix}
-                />
+              <h2 className="text-3xl sm:text-4xl font-extrabold font-heading text-white tracking-tight">
+                About Me
+              </h2>
+              <p className="text-indigo-400/80 font-mono text-xs sm:text-sm font-semibold">
+                Bridging the gap between robust SaaS logic and premium UI interactions.
+              </p>
+            </div>
+            
+            <div className="space-y-4 text-sm sm:text-base text-zinc-400 font-mono leading-relaxed">
+              <p>
+                I'm a Frontend Engineer with 3.2+ years of professional experience building enterprise-grade SaaS platforms. 
+                I specialize in React, Next.js, TypeScript, and scalable frontend architecture. 
+              </p>
+              <p>
+                Throughout my career, I've built complex multi-tenant applications, dynamic schema-driven UI systems, 
+                role-based access control, workflow engines, and reusable component libraries. 
+              </p>
+              <p>
+                I enjoy solving challenging UI architecture problems—like optimizing render loops for JSON-driven survey builders or designing flexible client styling gateways—while writing clean, maintainable, production-ready code.
+              </p>
+            </div>
+            
+            {/* Value Pillars */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              <div className="p-4 rounded-2xl border border-zinc-900 bg-zinc-950/40 space-y-1.5 hover:border-zinc-800/85 hover:bg-zinc-950/80 transition-all duration-300">
+                <span className="text-xs font-bold text-white block">SaaS Engineering</span>
+                <p className="text-xs text-zinc-500 leading-normal">
+                  Expertise in building scalable workflow builders, layout systems, and secure subdomain routing.
+                </p>
               </div>
-              <p className="text-[11px] font-mono text-zinc-500">{stat.desc}</p>
+              <div className="p-4 rounded-2xl border border-zinc-900 bg-zinc-950/40 space-y-1.5 hover:border-zinc-800/85 hover:bg-zinc-950/80 transition-all duration-300">
+                <span className="text-xs font-bold text-white block">Performance-First UI</span>
+                <p className="text-xs text-zinc-500 leading-normal">
+                  Focused on memoization, rendering isolation, strict type safety, and achieving optimal page speeds.
+                </p>
+              </div>
             </div>
-          ))}
-
-          {/* Non-numeric Stat: Code integrity */}
-          <div className="space-y-1.5 text-left border-l border-zinc-900 pl-4 sm:pl-6">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-indigo-400/90 font-bold">
-              Code Quality
-            </span>
-            <div className="text-lg sm:text-xl font-bold text-emerald-400 font-mono tracking-tight pt-1 sm:pt-2 flex items-center gap-1.5">
-              <ShieldCheck className="size-5 shrink-0 animate-pulse" />
-              TS strict: true
-            </div>
-            <p className="text-[11px] font-mono text-zinc-500">
-              Zero compiler errors
-            </p>
           </div>
+
+          {/* Right Column: Profile Summary Details (5 cols) */}
+          <div className="lg:col-span-5 relative w-full">
+            <div className="rounded-3xl border border-zinc-900 bg-zinc-950/70 p-6 backdrop-blur-sm shadow-xl space-y-6 relative overflow-hidden group">
+              {/* Corner accent glow */}
+              <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-indigo-500/10 to-transparent blur-2xl rounded-full pointer-events-none group-hover:from-indigo-500/20 transition-all duration-500" />
+              
+              <div className="flex items-center gap-3 pb-4 border-b border-zinc-900">
+                <div className="relative size-12 rounded-xl overflow-hidden border border-indigo-500/30 bg-zinc-900">
+                  <Image
+                    src="/icons/sankar.png"
+                    alt="Sankarapandian"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white leading-tight">Sankarapandian R</h3>
+                  <span className="text-[10px] font-mono text-zinc-500">Frontend Engineer &bull; Coimbatore</span>
+                </div>
+              </div>
+
+              {/* Grid of Key Facts */}
+              <div className="space-y-4 font-mono text-xs">
+                <div className="flex justify-between items-center py-2 border-b border-zinc-900/60">
+                  <span className="text-zinc-500">Experience</span>
+                  <span className="text-zinc-300 font-semibold">3.2+ Years</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-zinc-900/60">
+                  <span className="text-zinc-500">Status</span>
+                  <span className="text-emerald-400 font-semibold flex items-center gap-1.5">
+                    <span className="size-1.5 rounded-full bg-emerald-500 animate-ping" />
+                    Immediate Joiner
+                  </span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-zinc-900/60">
+                  <span className="text-zinc-500">Notice Period</span>
+                  <span className="text-zinc-300 font-semibold">Immediate</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-zinc-900/60">
+                  <span className="text-zinc-500">Preferred Location</span>
+                  <span className="text-zinc-300 font-semibold">Hybrid / Remote</span>
+                </div>
+                <div className="flex justify-between items-center py-2">
+                  <span className="text-zinc-500">Code Quality</span>
+                  <span className="text-indigo-400 font-semibold">Strict TS, Zero Errors</span>
+                </div>
+              </div>
+
+              {/* Mini CTA */}
+              <Link href="#contact">
+                <Button className="w-full h-10 mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-mono text-[11px] font-semibold flex items-center justify-center gap-1.5 rounded-xl cursor-pointer shadow-lg shadow-indigo-600/10">
+                  Request Full Resume
+                </Button>
+              </Link>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -225,14 +288,26 @@ export default function Home() {
                   </div>
 
                   <div className="flex flex-wrap gap-1.5 pt-6 border-t border-zinc-900 mt-6">
-                    {proj.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-lg border border-zinc-900 bg-zinc-950 px-2.5 py-0.5 text-[10px] font-mono text-zinc-400"
-                      >
-                        {t}
-                      </span>
-                    ))}
+                    {proj.tech.map((t) => {
+                      const iconPath = TECH_ICON_MAP[t];
+                      return (
+                        <span
+                          key={t}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-900 bg-zinc-950 px-2.5 py-0.5 text-[10px] font-mono text-zinc-400"
+                        >
+                          {iconPath && (
+                            <Image
+                              src={iconPath}
+                              alt=""
+                              width={12}
+                              height={12}
+                              className="object-contain shrink-0 rounded-[2px]"
+                            />
+                          )}
+                          {t}
+                        </span>
+                      );
+                    })}
                   </div>
                 </motion.div>
               </DialogTrigger>
@@ -274,14 +349,26 @@ export default function Home() {
                   <span className="text-[11px] text-zinc-500 font-bold uppercase mr-1 mt-1">
                     Tech Stack:
                   </span>
-                  {proj.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-lg border border-zinc-900 bg-zinc-900/40 px-2.5 py-1 text-xs font-semibold text-zinc-300"
-                    >
-                      {t}
-                    </span>
-                  ))}
+                  {proj.tech.map((t) => {
+                    const iconPath = TECH_ICON_MAP[t];
+                    return (
+                      <span
+                        key={t}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-900 bg-zinc-900/40 px-2.5 py-1 text-xs font-semibold text-zinc-300"
+                      >
+                        {iconPath && (
+                          <Image
+                            src={iconPath}
+                            alt=""
+                            width={14}
+                            height={14}
+                            className="object-contain shrink-0 rounded-[2px]"
+                          />
+                        )}
+                        {t}
+                      </span>
+                    );
+                  })}
                 </div>
               </DialogContent>
             </Dialog>
